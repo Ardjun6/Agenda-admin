@@ -111,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['monday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['monday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['monday'] == 'School' ? 'selected' : ''; ?>>School</option>
+				    <option value="Thuis werken" <?php echo $row['monday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['monday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_monday]" id="custom_monday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_monday'] ?? ''); ?>" <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -123,6 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['tuesday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['tuesday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['tuesday'] == 'School' ? 'selected' : ''; ?>>School</option>
+				    <option value="Thuis werken" <?php echo $row['tuesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['tuesday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_tuesday]" id="custom_tuesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_tuesday'] ?? ''); ?>" <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -135,6 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['wednesday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['wednesday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['wednesday'] == 'School' ? 'selected' : ''; ?>>School</option>
+				    <option value="Thuis werken" <?php echo $row['wednesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['wednesday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_wednesday]" id="custom_wednesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_wednesday'] ?? ''); ?>" <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -147,6 +150,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['thursday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['thursday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['thursday'] == 'School' ? 'selected' : ''; ?>>School</option>
+				    <option value="Thuis werken" <?php echo $row['thursday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['thursday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_thursday]" id="custom_thursday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_thursday'] ?? ''); ?>" <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -159,6 +163,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['friday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['friday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['friday'] == 'School' ? 'selected' : ''; ?>>School</option>
+				    <option value="Thuis werken" <?php echo $row['friday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['friday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_friday]" id="custom_friday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_friday'] ?? ''); ?>" <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
