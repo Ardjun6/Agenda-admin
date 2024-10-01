@@ -49,6 +49,12 @@ tbody tr:nth-child(odd) {
     text-align: center; /* Center align cell content */
 }
 
+/* Custom styling for "Eigen invoer" (custom input) */
+.table td[style*="background-color: #d8b2d1"] {
+    background-color: #d8b2d1 !important; /* Light purple background for custom input */
+    color: #000000; /* Ensure black text on light purple */
+}
+
 /* Alert styles for danger messages */
 .alert-danger {
     background-color: #ffcccc; /* Light red background */
@@ -76,4 +82,9 @@ input[type="text"],
 input[type="time"],
 select {
     margin-bottom: 10px; /* Space below input fields */
+}
+
+/* Custom input visibility */
+.hidden-input {
+    display: none;
 }

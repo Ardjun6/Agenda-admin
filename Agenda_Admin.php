@@ -11,22 +11,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $schedule = $_POST['schedule'];
         file_put_contents('schedule.json', json_encode($schedule));
     } elseif (isset($_POST['add'])) {
-        $schedule[] = ['name' => '', 'monday' => '', 'tuesday' => '', 'wednesday' => '', 'thursday' => '', 'friday' => '', 'start' => '', 'end' => '', 'custom_monday' => '', 'custom_tuesday' => '', 'custom_wednesday' => '', 'custom_thursday' => '', 'custom_friday' => ''];
+        $schedule[] = [
+            'name' => '',
+            'monday' => '', 'custom_monday' => '',
+            'tuesday' => '', 'custom_tuesday' => '',
+            'wednesday' => '', 'custom_wednesday' => '',
+            'thursday' => '', 'custom_thursday' => '',
+            'friday' => '', 'custom_friday' => '',
+            'start' => '', 'end' => ''
+        ];
     } elseif (isset($_POST['remove'])) {
         if (isset($_POST['remove_index']) && isset($schedule[$_POST['remove_index']])) {
             $removed_row = $schedule[$_POST['remove_index']];
-            // Store removed row temporarily for undo
             file_put_contents('removed.json', json_encode($removed_row));
             unset($schedule[$_POST['remove_index']]);
         }
     } elseif (isset($_POST['undo'])) {
         if (file_exists('removed.json')) {
             $removed_row = json_decode(file_get_contents('removed.json'), true);
-            $schedule[] = $removed_row; // Re-add removed row
-            unlink('removed.json'); // Delete the temp file
+            $schedule[] = $removed_row;
+            unlink('removed.json');
         }
     } elseif (isset($_POST['reset'])) {
-        // Reset de planning door te kopiëren van reset.json
         if (file_exists('reset.json')) {
             $schedule = json_decode(file_get_contents('reset.json'), true);
             file_put_contents('schedule.json', json_encode($schedule));
@@ -49,12 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             display: inline-block;
             width: 50%;
         }
-
         .hidden-input {
-            display: none;
-        }
-
-        .hidden-select {
             display: none;
         }
     </style>
@@ -65,27 +66,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             var selectInput = document.getElementById(selectId);
 
             if (selectElement.value === 'Eigen invoer') {
-                customInput.classList.remove('hidden-input'); // Toon het custom input veld
-                customInput.removeAttribute('readonly'); // Maak het veld bewerkbaar
-                selectInput.classList.add('hidden-select'); // Verberg de select dropdown
+                customInput.classList.remove('hidden-input');
+                customInput.removeAttribute('readonly');
+                selectInput.classList.add('hidden-select');
             } else {
-                customInput.classList.add('hidden-input'); // Verberg het custom input veld
-                customInput.value = ''; // Leeg het veld
-                customInput.setAttribute('readonly', true); // Maak het veld niet bewerkbaar
-                selectInput.classList.remove('hidden-select'); // Toon de select dropdown
+                customInput.classList.add('hidden-input');
+                customInput.value = '';
+                customInput.setAttribute('readonly', true);
+                selectInput.classList.remove('hidden-select');
             }
         }
-
-        // JavaScript functie om het formulier te verzenden als de gebruiker op Enter drukt
-        document.addEventListener('DOMContentLoaded', function () {
-            var form = document.querySelector('form');
-            form.addEventListener('keydown', function (event) {
-                if (event.key === 'Enter') {
-                    event.preventDefault(); // Voorkom standaard gedrag van Enter (zoals form submit)
-                    form.submit(); // Verstuur het formulier
-                }
-            });
-        });
     </script>
 </head>
 <body>
@@ -116,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td>
                                 <select id="select_monday_<?php echo $index; ?>" class="form-select select-inline" name="schedule[<?php echo $index; ?>][monday]" onchange="toggleCustomInput(this, 'custom_monday_<?php echo $index; ?>', 'select_monday_<?php echo $index; ?>')">
                                     <option value=""> </option>
-                                    <option value="Halve dag" class="halveday-option" <?php echo $row['monday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
+                                    <option value="Halve dag" <?php echo $row['monday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
                                     <option value="Vrij" <?php echo $row['monday'] == 'Vrij' ? 'selected' : ''; ?>>Vrij</option>
                                     <option value="Ziek" <?php echo $row['monday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['monday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
@@ -128,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td>
                                 <select id="select_tuesday_<?php echo $index; ?>" class="form-select select-inline" name="schedule[<?php echo $index; ?>][tuesday]" onchange="toggleCustomInput(this, 'custom_tuesday_<?php echo $index; ?>', 'select_tuesday_<?php echo $index; ?>')">
                                     <option value=""> </option>
-                                    <option value="Halve dag" class="halveday-option" <?php echo $row['tuesday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
+                                    <option value="Halve dag" <?php echo $row['tuesday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
                                     <option value="Vrij" <?php echo $row['tuesday'] == 'Vrij' ? 'selected' : ''; ?>>Vrij</option>
                                     <option value="Ziek" <?php echo $row['tuesday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['tuesday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
@@ -140,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td>
                                 <select id="select_wednesday_<?php echo $index; ?>" class="form-select select-inline" name="schedule[<?php echo $index; ?>][wednesday]" onchange="toggleCustomInput(this, 'custom_wednesday_<?php echo $index; ?>', 'select_wednesday_<?php echo $index; ?>')">
                                     <option value=""> </option>
-                                    <option value="Halve dag" class="halveday-option" <?php echo $row['wednesday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
+                                    <option value="Halve dag" <?php echo $row['wednesday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
                                     <option value="Vrij" <?php echo $row['wednesday'] == 'Vrij' ? 'selected' : ''; ?>>Vrij</option>
                                     <option value="Ziek" <?php echo $row['wednesday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['wednesday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
@@ -152,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td>
                                 <select id="select_thursday_<?php echo $index; ?>" class="form-select select-inline" name="schedule[<?php echo $index; ?>][thursday]" onchange="toggleCustomInput(this, 'custom_thursday_<?php echo $index; ?>', 'select_thursday_<?php echo $index; ?>')">
                                     <option value=""> </option>
-                                    <option value="Halve dag" class="halveday-option" <?php echo $row['thursday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
+                                    <option value="Halve dag" <?php echo $row['thursday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
                                     <option value="Vrij" <?php echo $row['thursday'] == 'Vrij' ? 'selected' : ''; ?>>Vrij</option>
                                     <option value="Ziek" <?php echo $row['thursday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['thursday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
@@ -164,7 +154,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <td>
                                 <select id="select_friday_<?php echo $index; ?>" class="form-select select-inline" name="schedule[<?php echo $index; ?>][friday]" onchange="toggleCustomInput(this, 'custom_friday_<?php echo $index; ?>', 'select_friday_<?php echo $index; ?>')">
                                     <option value=""> </option>
-                                    <option value="Halve dag" class="halveday-option" <?php echo $row['friday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
+                                    <option value="Halve dag" <?php echo $row['friday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
                                     <option value="Vrij" <?php echo $row['friday'] == 'Vrij' ? 'selected' : ''; ?>>Vrij</option>
                                     <option value="Ziek" <?php echo $row['friday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['friday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
@@ -191,11 +181,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" name="save" class="btn btn-success">Opslaan</button>
                 <button type="submit" name="add" class="btn btn-primary">Medewerker Toevoegen</button>
                 <button type="submit" name="reset" class="btn btn-warning">Reset</button>
-                <button type="submit" name="undo" class="btn btn-secondary">UNDO</button>
+                <button type="submit" name="undo" class="btn btn-secondary">Undo</button>
             </div>
         </form>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="agenda.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

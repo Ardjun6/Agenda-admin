@@ -4,9 +4,9 @@ body {
 }
 
 .container {
-position: relative;
-bottom: 50px;
-right:50px;
+    position: relative;
+    bottom: 50px;
+    right: 50px;
     max-width: 2200px; /* Set a max width for larger screens */
     height: calc(100vh - 100px); /* Adjust height to bring it up (more space from the top) */
     display: flex;
@@ -30,10 +30,9 @@ right:50px;
 }
 
 .table th, .table td {
-border: 1px solid #ffffff;
+    border: 1px solid #ffffff;
     padding: 5px; /* Consistent small padding */
     text-align: center;
-
 }
 
 .table th {
@@ -53,6 +52,12 @@ tbody tr:nth-child(odd) {
     background-color: #8b1c62; /* First column background color */
     font-weight: bold;
     color: #ffffff; /* First column text color */
+}
+
+/* Custom styling for "Eigen invoer" (custom input) */
+.table td[style*="background-color: #d8b2d1"] {
+    background-color: #d8b2d1 !important; /* Light purple background for custom input */
+    color: #000000; /* Ensure black text on light purple */
 }
 
 /* Responsive for smaller screens */
