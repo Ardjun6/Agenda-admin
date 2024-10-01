@@ -1,0 +1,79 @@
+body {
+    background-color: #f8f9fa; /* Light background color */
+}
+
+.container {
+    background-color: #ffffff; /* White background for the container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 20px; /* Padding around the container */
+}
+
+.table {
+    border-radius: 10px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensures that rounded corners are visible */
+    width: 100%; /* Ensure the table uses full width */
+}
+
+.table th {
+    background-color: #8b1c62; /* Dark purple header color */
+    color: #ffffff; /* White text for header */
+    border: none; /* Remove borders */
+    padding: 10px; /* Consistent padding */
+    text-align: center; /* Center align header text */
+}
+
+.table tbody tr:hover {
+    background-color: #e9ecef; /* Light grey background on hover */
+}
+
+/* Light color for the table rows */
+.table tbody tr {
+    transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f1f1f1; /* Light grey for odd rows */
+}
+
+/* Specific styling for names in the table */
+.table tbody td:first-child {
+    background-color: #8b1c62; /* Set the color for names to #8b1c62 */
+    font-weight: bold; /* Make names bold */
+    color: #ffffff; /* White text for names */
+}
+
+/* Ensure that table data cells have consistent padding */
+.table td {
+    padding: 10px; /* Consistent padding */
+    text-align: center; /* Center align cell content */
+}
+
+/* Alert styles for danger messages */
+.alert-danger {
+    background-color: #ffcccc; /* Light red background */
+    color: #b30000; /* Dark red text */
+}
+
+/* Button styles */
+.btn-success, .btn-danger, .btn-primary {
+    font-size: 1.1rem; /* Slightly larger font for buttons */
+}
+
+/* Header styles */
+h1 {
+    font-size: 2.5rem; /* Large font size for the header */
+    color: #343a40; /* Dark grey color for header text */
+}
+
+/* Responsive table styles */
+.table-responsive {
+    margin-top: 20px; /* Space above the responsive table */
+}
+
+/* Input field styles */
+input[type="text"],
+input[type="time"],
+select {
+    margin-bottom: 10px; /* Space below input fields */
+}

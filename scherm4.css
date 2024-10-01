@@ -1,0 +1,73 @@
+body {
+    background-color: #f8f9fa;
+    overflow: hidden; /* Prevent any scrolling */
+}
+
+.container {
+position: relative;
+bottom: 50px;
+right:50px;
+    max-width: 2200px; /* Set a max width for larger screens */
+    height: calc(100vh - 100px); /* Adjust height to bring it up (more space from the top) */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: flex-start; /* Align content at the top */
+}
+
+.table-responsive {
+    flex-grow: 1;
+    display: flex;
+    align-items: center; /* Vertically center table within available space */
+    justify-content: center; /* Horizontally center table */
+    overflow-y: auto; /* Allow vertical scrolling if content exceeds the height */
+    max-height: 100vh; /* Ensure it doesn't exceed the container height */
+}
+
+.table {
+    width: 100%; /* Full width of the container */
+    table-layout: fixed; /* Ensure fixed column widths */
+    font-size: calc(0.7vw + 0.7vh); /* Dynamically scale text size based on viewport */
+}
+
+.table th, .table td {
+border: 1px solid #ffffff;
+    padding: 5px; /* Consistent small padding */
+    text-align: center;
+
+}
+
+.table th {
+    background-color: #8b1c62; /* Header background color */
+    color: #ffffff; /* Header text color */
+}
+
+.table tbody tr:hover {
+    background-color: #e9ecef; /* Hover effect for rows */
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f1f1f1; /* Alternate row background */
+}
+
+.table tbody td:first-child {
+    background-color: #8b1c62; /* First column background color */
+    font-weight: bold;
+    color: #ffffff; /* First column text color */
+}
+
+/* Responsive for smaller screens */
+@media screen and (max-width: 768px) {
+    .table th, .table td {
+        font-size: calc(0.6vw + 0.6vh);
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .table th, .table td {
+        font-size: calc(0.5vw + 0.5vh);
+    }
+    
+    .container {
+        padding: 5px; /* Adjust padding for smaller screens */
+    }
+}
