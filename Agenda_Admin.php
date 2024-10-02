@@ -5,7 +5,7 @@ if (file_exists('schedule.json')) {
     $schedule = json_decode(file_get_contents('schedule.json'), true);
 }
 
-// Voeg een nieuwe medewerker toe
+// Voeg een nieuwe medewerker toe of verwijder een medewerker
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['save'])) {
         $schedule = $_POST['schedule'];
@@ -26,19 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             file_put_contents('removed.json', json_encode($removed_row));
             unset($schedule[$_POST['remove_index']]);
         }
-    } elseif (isset($_POST['undo'])) {
-        if (file_exists('removed.json')) {
-            $removed_row = json_decode(file_get_contents('removed.json'), true);
-            $schedule[] = $removed_row;
-            unlink('removed.json');
-        }
-    } elseif (isset($_POST['reset'])) {
-        if (file_exists('reset.json')) {
-            $schedule = json_decode(file_get_contents('reset.json'), true);
-            file_put_contents('schedule.json', json_encode($schedule));
-        }
-    }
+    } 
     file_put_contents('schedule.json', json_encode(array_values($schedule)));
+}
+
+// Datum toevoegen voor de huidige weekdagen
+setlocale(LC_TIME, 'nl_NL.UTF-8');
+$today = new DateTime();
+$monday = clone $today;
+$monday->modify(('Monday' == $today->format('l')) ? 'this Monday' : 'last Monday');
+
+$weekDates = [];
+$daysOfWeek = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag'];
+for ($i = 0; $i < 5; $i++) {
+    $day = clone $monday;
+    $day->modify("+$i days");
+    $weekDates[] = $daysOfWeek[$i] . ' ' . $day->format('d-m-y');
 }
 ?>
 
@@ -87,11 +90,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <thead class="table-dark text-center">
                         <tr>
                             <th>Medewerker</th>
-                            <th>Maandag</th>
-                            <th>Dinsdag</th>
-                            <th>Woensdag</th>
-                            <th>Donderdag</th>
-                            <th>Vrijdag</th>
+                            <?php foreach ($weekDates as $date): ?>
+                                <th><?php echo htmlspecialchars($date); ?></th>
+                            <?php endforeach; ?>
                             <th>Starttijd</th>
                             <th>Eindtijd</th>
                             <th>Verwijder</th>
@@ -111,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['monday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['monday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['monday'] == 'School' ? 'selected' : ''; ?>>School</option>
-				    <option value="Thuis werken" <?php echo $row['monday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
+                                    <option value="Thuis werken" <?php echo $row['monday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['monday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_monday]" id="custom_monday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_monday'] ?? ''); ?>" <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -124,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['tuesday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['tuesday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['tuesday'] == 'School' ? 'selected' : ''; ?>>School</option>
-				    <option value="Thuis werken" <?php echo $row['tuesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
+                                    <option value="Thuis werken" <?php echo $row['tuesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['tuesday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_tuesday]" id="custom_tuesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_tuesday'] ?? ''); ?>" <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -137,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['wednesday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['wednesday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['wednesday'] == 'School' ? 'selected' : ''; ?>>School</option>
-				    <option value="Thuis werken" <?php echo $row['wednesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
+                                    <option value="Thuis werken" <?php echo $row['wednesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['wednesday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_wednesday]" id="custom_wednesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_wednesday'] ?? ''); ?>" <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -150,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['thursday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['thursday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['thursday'] == 'School' ? 'selected' : ''; ?>>School</option>
-				    <option value="Thuis werken" <?php echo $row['thursday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
+                                    <option value="Thuis werken" <?php echo $row['thursday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['thursday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_thursday]" id="custom_thursday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_thursday'] ?? ''); ?>" <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -163,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <option value="Ziek" <?php echo $row['friday'] == 'Ziek' ? 'selected' : ''; ?>>Ziek</option>
                                     <option value="Verlof" <?php echo $row['friday'] == 'Verlof' ? 'selected' : ''; ?>>Verlof</option>
                                     <option value="School" <?php echo $row['friday'] == 'School' ? 'selected' : ''; ?>>School</option>
-				    <option value="Thuis werken" <?php echo $row['friday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
+                                    <option value="Thuis werken" <?php echo $row['friday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['friday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
                                 <input type="text" class="form-control inline-input <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_friday]" id="custom_friday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_friday'] ?? ''); ?>" <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
@@ -175,18 +176,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <input type="time" class="form-control" name="schedule[<?php echo $index; ?>][end]" value="<?php echo htmlspecialchars($row['end']); ?>">
                             </td>
                             <td>
-                                <button type="submit" name="remove" class="btn btn-danger" value="<?php echo $index; ?>">Verwijder</button>
+                                <button type="submit" name="remove" class="btn btn-danger">Verwijder</button>
+                                <input type="hidden" name="remove_index" value="<?php echo $index; ?>">
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-            <div class="text-center">
-                <button type="submit" name="save" class="btn btn-success">Opslaan</button>
-                <button type="submit" name="add" class="btn btn-primary">Medewerker Toevoegen</button>
-                <button type="submit" name="reset" class="btn btn-warning">Reset</button>
-                <button type="submit" name="undo" class="btn btn-secondary">Undo</button>
+            <div class="text-left">
+                <button type="submit" name="save" class="btn btn-success">Save</button>
+                <button type="submit" name="add" class="btn btn-primary">Add</button>
             </div>
         </form>
     </div>

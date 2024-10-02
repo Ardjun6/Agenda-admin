@@ -21,6 +21,25 @@ if (file_exists('schedule.json')) {
         $schedule = []; // Reset schedule if there is an error
     }
 }
+
+// Set locale to Dutch for proper weekday translation
+setlocale(LC_TIME, 'nl_NL.UTF-8');
+
+// Get the current date
+$today = new DateTime();
+
+// Find Monday of the current week
+$monday = clone $today;
+$monday->modify(('Monday' == $today->format('l')) ? 'this Monday' : 'last Monday');
+
+// Create an array to hold the week dates
+$weekDates = [];
+$daysOfWeek = ['Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag']; 
+for ($i = 0; $i < 5; $i++) { 
+    $day = clone $monday;
+    $day->modify("+$i days");
+    $weekDates[] = $daysOfWeek[$i] . ' ' . $day->format('d-m-y');
+}
 ?>
 <!DOCTYPE html>
 <html lang="nl">
@@ -39,16 +58,14 @@ if (file_exists('schedule.json')) {
             <thead class="table-dark text-center">
                 <tr>
                     <th>Medewerker</th>
-                    <th>Maandag</th>
-                    <th>Dinsdag</th>
-                    <th>Woensdag</th>
-                    <th>Donderdag</th>
-                    <th>Vrijdag</th>
+                    <?php foreach ($weekDates as $date): ?>
+                        <th><?php echo htmlspecialchars($date); ?></th>
+                    <?php endforeach; ?>
                     <th>Starttijd</th>
                     <th>Eindtijd</th>
                 </tr>
             </thead>
-           <tbody>
+            <tbody>
     <?php foreach ($schedule as $row): ?>
     <?php
     // Check if at least one relevant field is not empty
@@ -68,54 +85,54 @@ if (file_exists('schedule.json')) {
     ?>
     <?php if ($hasContent): ?>
     <tr>
-        <td><?php echo htmlspecialchars($row['name']); ?></td>
-        <td style="<?php echo ($row['monday'] === 'Halve dag') ? 'background-color: #ffebcd;' : 
-                      (($row['monday'] === 'Thuis werken') ? 'background-color: #ADD8E6;' : 
-                      (($row['monday'] === 'Vrij') ? 'background-color: #d4edda;' : 
-                      (($row['monday'] === 'Verlof') ? 'background-color: #e2d6f7;' : 
-                      (($row['monday'] === 'Ziek') ? 'background-color: #f8d7da;' : 
-                      (($row['monday'] === 'School') ? 'background-color: #cce5ff;' : 
-                      (($row['monday'] === 'Eigen invoer') ? 'background-color: #d8b2d1;' : '')))))); ?>">
-            <?php echo $row['monday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_monday']) : htmlspecialchars($row['monday']); ?>
+        <td><?php echo htmlspecialchars($row['name'] ?? ''); ?></td>
+        <td style="<?php echo isset($row['monday']) && $row['monday'] === 'Halve dag' ? 'background-color: #ffebcd;' : 
+                      (isset($row['monday']) && $row['monday'] === 'Thuis werken' ? 'background-color: #ADD8E6;' : 
+                      (isset($row['monday']) && $row['monday'] === 'Vrij' ? 'background-color: #d4edda;' : 
+                      (isset($row['monday']) && $row['monday'] === 'Verlof' ? 'background-color: #e2d6f7;' : 
+                      (isset($row['monday']) && $row['monday'] === 'Ziek' ? 'background-color: #f8d7da;' : 
+                      (isset($row['monday']) && $row['monday'] === 'School' ? 'background-color: #cce5ff;' : 
+                      (isset($row['monday']) && $row['monday'] === 'Eigen invoer' ? 'background-color: #d8b2d1;' : '')))))); ?>">
+            <?php echo isset($row['monday']) && $row['monday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_monday'] ?? '') : htmlspecialchars($row['monday'] ?? ''); ?>
         </td>
-        <td style="<?php echo ($row['tuesday'] === 'Halve dag') ? 'background-color: #ffebcd;' : 
-                      (($row['tuesday'] === 'Thuis werken') ? 'background-color: #ADD8E6;' : 
-                      (($row['tuesday'] === 'Vrij') ? 'background-color: #d4edda;' : 
-                      (($row['tuesday'] === 'Verlof') ? 'background-color: #e2d6f7;' : 
-                      (($row['tuesday'] === 'Ziek') ? 'background-color: #f8d7da;' : 
-                      (($row['tuesday'] === 'School') ? 'background-color: #cce5ff;' : 
-                      (($row['tuesday'] === 'Eigen invoer') ? 'background-color: #d8b2d1;' : '')))))); ?>">
-            <?php echo $row['tuesday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_tuesday']) : htmlspecialchars($row['tuesday']); ?>
+        <td style="<?php echo isset($row['tuesday']) && $row['tuesday'] === 'Halve dag' ? 'background-color: #ffebcd;' : 
+                      (isset($row['tuesday']) && $row['tuesday'] === 'Thuis werken' ? 'background-color: #ADD8E6;' : 
+                      (isset($row['tuesday']) && $row['tuesday'] === 'Vrij' ? 'background-color: #d4edda;' : 
+                      (isset($row['tuesday']) && $row['tuesday'] === 'Verlof' ? 'background-color: #e2d6f7;' : 
+                      (isset($row['tuesday']) && $row['tuesday'] === 'Ziek' ? 'background-color: #f8d7da;' : 
+                      (isset($row['tuesday']) && $row['tuesday'] === 'School' ? 'background-color: #cce5ff;' : 
+                      (isset($row['tuesday']) && $row['tuesday'] === 'Eigen invoer' ? 'background-color: #d8b2d1;' : '')))))); ?>">
+            <?php echo isset($row['tuesday']) && $row['tuesday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_tuesday'] ?? '') : htmlspecialchars($row['tuesday'] ?? ''); ?>
         </td>
-        <td style="<?php echo ($row['wednesday'] === 'Halve dag') ? 'background-color: #ffebcd;' : 
-                      (($row['wednesday'] === 'Thuis werken') ? 'background-color: #ADD8E6;' : 
-                      (($row['wednesday'] === 'Vrij') ? 'background-color: #d4edda;' : 
-                      (($row['wednesday'] === 'Verlof') ? 'background-color: #e2d6f7;' : 
-                      (($row['wednesday'] === 'Ziek') ? 'background-color: #f8d7da;' : 
-                      (($row['wednesday'] === 'School') ? 'background-color: #cce5ff;' : 
-                      (($row['wednesday'] === 'Eigen invoer') ? 'background-color: #d8b2d1;' : '')))))); ?>">
-            <?php echo $row['wednesday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_wednesday']) : htmlspecialchars($row['wednesday']); ?>
+        <td style="<?php echo isset($row['wednesday']) && $row['wednesday'] === 'Halve dag' ? 'background-color: #ffebcd;' : 
+                      (isset($row['wednesday']) && $row['wednesday'] === 'Thuis werken' ? 'background-color: #ADD8E6;' : 
+                      (isset($row['wednesday']) && $row['wednesday'] === 'Vrij' ? 'background-color: #d4edda;' : 
+                      (isset($row['wednesday']) && $row['wednesday'] === 'Verlof' ? 'background-color: #e2d6f7;' : 
+                      (isset($row['wednesday']) && $row['wednesday'] === 'Ziek' ? 'background-color: #f8d7da;' : 
+                      (isset($row['wednesday']) && $row['wednesday'] === 'School' ? 'background-color: #cce5ff;' : 
+                      (isset($row['wednesday']) && $row['wednesday'] === 'Eigen invoer' ? 'background-color: #d8b2d1;' : '')))))); ?>">
+            <?php echo isset($row['wednesday']) && $row['wednesday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_wednesday'] ?? '') : htmlspecialchars($row['wednesday'] ?? ''); ?>
         </td>
-        <td style="<?php echo ($row['thursday'] === 'Halve dag') ? 'background-color: #ffebcd;' : 
-                      (($row['thursday'] === 'Thuis werken') ? 'background-color: #ADD8E6;' : 
-                      (($row['thursday'] === 'Vrij') ? 'background-color: #d4edda;' : 
-                      (($row['thursday'] === 'Verlof') ? 'background-color: #e2d6f7;' : 
-                      (($row['thursday'] === 'Ziek') ? 'background-color: #f8d7da;' : 
-                      (($row['thursday'] === 'School') ? 'background-color: #cce5ff;' : 
-                      (($row['thursday'] === 'Eigen invoer') ? 'background-color: #d8b2d1;' : '')))))); ?>">
-            <?php echo $row['thursday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_thursday']) : htmlspecialchars($row['thursday']); ?>
+        <td style="<?php echo isset($row['thursday']) && $row['thursday'] === 'Halve dag' ? 'background-color: #ffebcd;' : 
+                      (isset($row['thursday']) && $row['thursday'] === 'Thuis werken' ? 'background-color: #ADD8E6;' : 
+                      (isset($row['thursday']) && $row['thursday'] === 'Vrij' ? 'background-color: #d4edda;' : 
+                      (isset($row['thursday']) && $row['thursday'] === 'Verlof' ? 'background-color: #e2d6f7;' : 
+                      (isset($row['thursday']) && $row['thursday'] === 'Ziek' ? 'background-color: #f8d7da;' : 
+                      (isset($row['thursday']) && $row['thursday'] === 'School' ? 'background-color: #cce5ff;' : 
+                      (isset($row['thursday']) && $row['thursday'] === 'Eigen invoer' ? 'background-color: #d8b2d1;' : '')))))); ?>">
+            <?php echo isset($row['thursday']) && $row['thursday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_thursday'] ?? '') : htmlspecialchars($row['thursday'] ?? ''); ?>
         </td>
-        <td style="<?php echo ($row['friday'] === 'Halve dag') ? 'background-color: #ffebcd;' : 
-                      (($row['friday'] === 'Thuis werken') ? 'background-color: #ADD8E6;' : 
-                      (($row['friday'] === 'Vrij') ? 'background-color: #d4edda;' : 
-                      (($row['friday'] === 'Verlof') ? 'background-color: #e2d6f7;' : 
-                      (($row['friday'] === 'Ziek') ? 'background-color: #f8d7da;' : 
-                      (($row['friday'] === 'School') ? 'background-color: #cce5ff;' : 
-                      (($row['friday'] === 'Eigen invoer') ? 'background-color: #d8b2d1;' : '')))))); ?>">
-            <?php echo $row['friday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_friday']) : htmlspecialchars($row['friday']); ?>
+        <td style="<?php echo isset($row['friday']) && $row['friday'] === 'Halve dag' ? 'background-color: #ffebcd;' : 
+                      (isset($row['friday']) && $row['friday'] === 'Thuis werken' ? 'background-color: #ADD8E6;' : 
+                      (isset($row['friday']) && $row['friday'] === 'Vrij' ? 'background-color: #d4edda;' : 
+                      (isset($row['friday']) && $row['friday'] === 'Verlof' ? 'background-color: #e2d6f7;' : 
+                      (isset($row['friday']) && $row['friday'] === 'Ziek' ? 'background-color: #f8d7da;' : 
+                      (isset($row['friday']) && $row['friday'] === 'School' ? 'background-color: #cce5ff;' : 
+                      (isset($row['friday']) && $row['friday'] === 'Eigen invoer' ? 'background-color: #d8b2d1;' : '')))))); ?>">
+            <?php echo isset($row['friday']) && $row['friday'] === 'Eigen invoer' ? htmlspecialchars($row['custom_friday'] ?? '') : htmlspecialchars($row['friday'] ?? ''); ?>
         </td>
-        <td><?php echo htmlspecialchars($row['start'] ?: ''); ?></td>
-        <td><?php echo htmlspecialchars($row['end'] ?: ''); ?></td>
+        <td><?php echo htmlspecialchars($row['start'] ?? ''); ?></td>
+        <td><?php echo htmlspecialchars($row['end'] ?? ''); ?></td>
     </tr>
     <?php endif; ?>
     <?php endforeach; ?>
