@@ -52,7 +52,7 @@ for ($i = 0; $i < 5; $i++) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Rooster Bewerken</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
     <style>
         .inline-input {
             display: inline-block;
@@ -102,7 +102,7 @@ for ($i = 0; $i < 5; $i++) {
                         <?php foreach ($schedule as $index => $row): ?>
                         <tr>
                             <td>
-                                <input type="text" class="form-control" name="schedule[<?php echo $index; ?>][name]" value="<?php echo htmlspecialchars($row['name']); ?>" placeholder="Naam medewerker">
+                                <input type="text" class="form-control color" name="schedule[<?php echo $index; ?>][name]" value="<?php echo htmlspecialchars($row['name']); ?>" placeholder="Naam medewerker">
                             </td>
                             <td>
                                 <select id="select_monday_<?php echo $index; ?>" class="form-select select-inline" name="schedule[<?php echo $index; ?>][monday]" onchange="toggleCustomInput(this, 'custom_monday_<?php echo $index; ?>', 'select_monday_<?php echo $index; ?>')">
@@ -183,11 +183,11 @@ for ($i = 0; $i < 5; $i++) {
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-            </div>
-            <div class="text-left">
-                <button type="submit" name="save" class="btn btn-success">Save</button>
-                <button type="submit" name="add" class="btn btn-primary">Add</button>
-            </div>
+            </div><br>
+       <div class="text-left">
+    <button type="submit" name="save" class="btn btn-success neon-btn">Save</button>
+    <button type="submit" name="add" class="btn btn-primary neon-btn">Add</button>
+</div>
         </form>
     </div>
 <script src="agenda.js"></script>
