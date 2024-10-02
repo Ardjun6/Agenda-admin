@@ -11,3 +11,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const selects = document.querySelectorAll('select');
+    selects.forEach(select => {
+        updateCellBackground(select); // Call on page load
+
+        select.addEventListener('change', function () {
+            updateCellBackground(select); // Update when selection changes
+        });
+    });
+    
+    function updateCellBackground(select) {
+        const selectedOption = select.options[select.selectedIndex];
+        if (selectedOption.value === '') { // Check if "Leeg" is selected
+            select.closest('select').style.color = '#e4e2e2'; // Apply gray background
+        } else {
+            select.closest('select').style.color = ''; // Remove gray background
+        }
+    }
+});
