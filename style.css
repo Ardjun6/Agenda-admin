@@ -1,178 +1,267 @@
 body {
     background-color: #f8f9fa;
-    overflow: auto; /* Allow scrolling of the entire page */
-	font-family: "Calibri", Times, serif;
+    overflow: auto;
+    /* Allow scrolling of the entire page */
+    font-family: "Calibri", Times, serif;
 }
 
 .container {
     position: relative;
-    max-width: 100%; /* Full width for better responsiveness */
+    max-width: 100%;
+    /* Full width for better responsiveness */
     padding: 20px;
-    height: auto; /* Adjust height for content */
+    height: auto;
+    /* Adjust height for content */
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: flex-start; /* Align content at the top */
+    flex-direction: column;
+    /* Stack elements vertically */
+    justify-content: flex-start;
+    /* Align content at the top */
 }
 
 .table-responsive {
     flex-grow: 1;
     padding: 10px;
-    border-radius: 15px; /* Add curves to the table container */
-    background-color: #ffffff; /* White background for a clean table look */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for elevation */
-    overflow: visible; /* No scrolling within the table */
-    max-height: none; /* Remove any max height that may force scrolling */
+    border-radius: 15px;
+    /* Add curves to the table container */
+    background-color: #ffffff;
+    /* White background for a clean table look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Light shadow for elevation */
+    overflow: visible;
+    /* No scrolling within the table */
+    max-height: none;
+    /* Remove any max height that may force scrolling */
 }
 
 .table {
-    width: 100%; /* Full width of the container */
-    border-collapse: separate; /* Ensure borders do not merge */
-    border-spacing: 1; /* No gaps between cells */
+    width: 100%;
+    /* Full width of the container */
+    border-collapse: separate;
+    /* Ensure borders do not merge */
+    border-spacing: 1;
+    /* No gaps between cells */
     border-radius: 15px;
-    font-size: calc(0.7vw + 0.7vh); /* Dynamically scale text size */
+    font-size: calc(0.7vw + 0.7vh);
+    /* Dynamically scale text size */
     background-color: #ffffff;
 }
 
-h1{text-align:center;}
-
-.table th, .table td {
-    border: 1px solid #dee2e6; /* Soft border for table cells */
-    padding: 0px; /* Reduced padding for all cells */
+h1 {
     text-align: center;
-    vertical-align: middle; /* Center content vertically */
 }
 
-.table th:first-child, .table td:first-child {
-    background-color: #8b1c62; /* Dark purple for "Medewerker" column */
-    color: #ffffff; /* White text in "Medewerker" column */
+.table th,
+.table td {
+    border: 1px solid #dee2e6;
+    /* Soft border for table cells */
+    padding: 0px;
+    /* Reduced padding for all cells */
+    text-align: center;
+    vertical-align: middle;
+    /* Center content vertically */
+}
+
+.table th:first-child,
+.table td:first-child {
+    background-color: #8b1c62;
+    /* Dark purple for "Medewerker" column */
+    color: #ffffff;
+    /* White text in "Medewerker" column */
     font-weight: bold;
-    padding: 3px; /* Reduced padding for "Medewerker" */
+    padding: 3px;
+    /* Reduced padding for "Medewerker" */
 }
 
-.form-control{width: 100px; background}
-
-
+.form-control {
+    width: 100px;
+    background: none;
+}
 
 .table th {
-    background-color: #8b1c62; /* Dark purple for header */
-    color: #ffffff; /* White text in header */
-    border-bottom: 2px solid #6f134a; /* Slightly darker border for depth */
+    background-color: #8b1c62;
+    /* Dark purple for header */
+    color: #ffffff;
+    /* White text in header */
+    border-bottom: 2px solid #6f134a;
+    /* Slightly darker border for depth */
 }
 
-.table td {
-    background-color: #ffffff; /* Ensure white background for clarity */
-	width: 100px;
+
+/* Adjusted columns for "Starttijd", "Eindtijd", and "Verwijder" */
+
+.small-column {
+    width: 10px;
+    /* Adjust to fit time inputs and "Verwijder" button exactly */
+}
+
+input[type="time"] {
+    width: 80%;
+    /* Ensure the time input takes up full width of the small column */
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    width: 80%;
+    /* Ensure the time input takes up full width of the small column */
+    padding: 5px;
+    box-sizing: border-box;
+}
+
+
+/* "Verwijder" button: always red with no animation */
+
+.btn-danger {
+    background-color: #dc3545;
+    /* Red for danger */
+    color: #ffffff;
+    width: 100%;
+    /* Full width of the small column */
+    padding: 5px 10px;
+    /* Adjust padding for smaller button */
+    font-size: 0.9rem;
+    /* Slightly smaller font for compact button */
+    border: none;
+    /* Remove any border */
+    cursor: pointer;
+}
+
+
+/* Remove hover and animation effects for the "Verwijder" button */
+
+.btn-danger:hover,
+.btn-danger:active {
+    background-color: #dc3545;
+    /* Always the same red color */
+}
+
+
+/* Styling for Eigen invoer: input below the dropdown */
+
+.inline-input {
+    display: block;
+    /* Make the input appear below the select */
+    margin-top: 5px;
+    width: 100%;
+    /* Ensure full width for input */
+    padding: 5px;
 }
 
 .table tbody tr:hover {
-    background-color: #e9ecef; /* Hover effect on table rows */
+    background-color: #e9ecef;
+    /* Hover effect on table rows */
 }
 
 tbody tr:nth-child(odd) {
-    background-color: #f9f9f9; /* Alternate row background for clarity */
+    background-color: #d9d9d9;
+    /* Alternate row background for clarity */
 }
 
-/* Custom styling for "Eigen invoer" */
-.table td .inline-input {
-    color: #000000; /* Black text for custom input */
-}
 
 /* Input and Select Menu Styles */
-input[type="text"], input[type="time"], select {
+
+input[type="text"],
+input[type="time"],
+select {
     border: 1px solid #ced4da;
     border-radius: 8px;
-    padding: 6px 10px; /* Reduced padding for inputs and select */
+    padding: 6px 10px;
+    /* Reduced padding for inputs and select */
     font-size: 1rem;
     transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-    box-shadow: none; /* Remove default shadow */
+    box-shadow: none;
+    /* Remove default shadow */
+    background-color: #f8f9fa;
+    /* Match input field color to surrounding area */
+    color: #333;
+    /* Ensure text is visible */
 }
 
-input[type="text"]:focus, input[type="time"]:focus, select:focus {
-    border-color: #8b1c62; /* Focus border color */
-    box-shadow: 0 0 8px rgba(139, 28, 98, 0.5); /* Subtle shadow on focus */
-    outline: none; /* Remove default outline */
+input[type="text"]:focus,
+input[type="time"]:focus,
+select:focus {
+    border-color: #8b1c62;
+    /* Focus border color */
+    box-shadow: 0 0 8px rgba(139, 28, 98, 0.5);
+    /* Subtle shadow on focus */
+    outline: none;
+    /* Remove default outline */
 }
 
 select {
-    background-color: #ffffff; /* White background for select */
-    appearance: none; /* Remove default arrow for custom design */
-    background-image: url('data:image/svg+xml;base64,...'); /* Custom dropdown icon (replace with actual icon) */
+    background-color: #ffffff;
+    /* White background for select */
+    appearance: none;
+    /* Remove default arrow for custom design */
+    background-image: url('down-arrow-icon.png');
+    /* Custom dropdown icon (replace with actual icon) */
     background-repeat: no-repeat;
     background-position: right 10px center;
 }
 
-/* Button Styling with Animations */
+select option[value=""] {
+    font-style: italic;
+    /* Italicize "Leeg" option */
+}
+
+
+/* Button Styling */
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    /* Center the buttons */
+    margin-top: 20px;
+}
+
 .btn {
     padding: 10px 20px;
     font-size: 1rem;
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease; /* Add smooth animation */
-}
-
-.btn-danger {
-    background-color: #dc3545; /* Red for danger */
-    color: #ffffff;
-}
-
-.btn-danger:hover {
-    background-color: #c82333;
-    transform: translateY(-3px); /* Lift button slightly */
+    margin: 0 10px;
+    /* Add space between buttons */
 }
 
 .btn-success {
-    background-color: #28a745; /* Green for save */
+    background-color: #28a745;
+    /* Green for save */
     color: #ffffff;
-}
-
-.btn-success:hover {
-    background-color: #218838;
-    transform: translateY(-3px); /* Lift button slightly */
 }
 
 .btn-primary {
-    background-color: #007bff; /* Blue for add */
+    background-color: #007bff;
+    /* Blue for add */
     color: #ffffff;
 }
 
-.btn-primary:hover {
-    background-color: #0069d9;
-    transform: translateY(-3px); /* Lift button slightly */
-}
-
-/* Button click effect */
-.btn:active {
-    transform: scale(0.98); /* Slight shrinking on click */
-}
-
-.color {
-    background-color: #8b1c62;
-    color: #fff;
-    font-size: 0.9rem; /* Slightly smaller font size */
-}
 
 /* Responsive adjustments for smaller screens */
-@media screen and (max-width: 768px) {
-    .table th, .table td {
-        font-size: calc(0.6vw + 0.6vh); /* Smaller font for mobile */
-    }
 
+@media screen and (max-width: 768px) {
+    .table th,
+    .table td {
+        font-size: calc(0.6vw + 0.6vh);
+        /* Smaller font for mobile */
+    }
     .container {
         padding: 10px;
     }
 }
 
 @media screen and (max-width: 576px) {
-    .table th, .table td {
-        font-size: calc(0.5vw + 0.5vh); /* Further reduce font size */
+    .table th,
+    .table td {
+        font-size: calc(0.5vw + 0.5vh);
+        /* Further reduce font size */
     }
-
     .container {
         padding: 5px;
     }
-
     .btn {
-        font-size: 0.9rem; /* Make buttons smaller on mobile */
+        font-size: 0.9rem;
+        /* Make buttons smaller on mobile */
     }
 }
