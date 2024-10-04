@@ -53,20 +53,20 @@ for ($i = 0; $i < 5; $i++) {
     <link rel="stylesheet" href="style.css">
     <title>Rooster Bewerken</title>
     <style>
-	.inline-input {
+    .inline-input {
         display: block;
-        width: 42.5%; /* Ensure it takes up full width */
-        text-align: center; /* Center the text inside the input */
-        margin: 0 auto; /* Center the input horizontally */
+        width: 42.5%;
+        text-align: center;
+        margin: 0 auto;
     }
 
     input[type="text"] {
-        text-align: center; /* Center the text inside the input */
+        text-align: center;
     }
 
     select {
-        width: 50%; /* Ensure full width */
-        margin-bottom: 5px; /* Add space below the select dropdown */
+        width: 50%;
+        margin-bottom: 5px;
     }
 
     .hidden-input {
@@ -80,7 +80,6 @@ for ($i = 0; $i < 5; $i++) {
     }
     </style>
     <script>
-        // JavaScript functie om een custom input te tonen of te verbergen
         function toggleCustomInput(selectElement, customInputId, selectId) {
             var customInput = document.getElementById(customInputId);
             var selectInput = document.getElementById(selectId);
@@ -100,7 +99,7 @@ for ($i = 0; $i < 5; $i++) {
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center display-4 mb-4">Rooster Bewerken</h1>
+        <h1 class="text-center display-4 mb-4">Rooster Beheer</h1>
         <form action="Agenda_Admin.php" method="post">
             <div class="table-responsive">
                 <table class="table table-hover table-striped table-bordered">
@@ -118,13 +117,11 @@ for ($i = 0; $i < 5; $i++) {
                     <tbody id="schedule-rows">
                         <?php foreach ($schedule as $index => $row): ?>
                         <tr>
+                            <!-- Naam medewerker -->
                             <td>
-                                <?php if (empty($row['name'])): ?>
-                                    <span class="light-grey-text">Leeg</span>
-                                <?php else: ?>
-                                    <input type="text" class="form-control" name="schedule[<?php echo $index; ?>][name]" value="<?php echo htmlspecialchars($row['name']); ?>" placeholder="Naam medewerker">
-                                <?php endif; ?>
+                                <input type="text" class="form-control" name="schedule[<?php echo $index; ?>][name]" value="<?php echo htmlspecialchars($row['name']); ?>" placeholder="Naam medewerker" maxlength="20">
                             </td>
+                            
                             <!-- Monday -->
                             <td>
                                 <select id="select_monday_<?php echo $index; ?>" class="form-select" name="schedule[<?php echo $index; ?>][monday]" onchange="toggleCustomInput(this, 'custom_monday_<?php echo $index; ?>', 'select_monday_<?php echo $index; ?>')">
@@ -137,9 +134,10 @@ for ($i = 0; $i < 5; $i++) {
                                     <option value="Thuis werken" <?php echo $row['monday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['monday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
-                                <input type="text" class="form-control inline-input <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_monday]" id="custom_monday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_monday'] ?? ''); ?>" <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
+                                <input type="text" class="form-control inline-input <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_monday]" id="custom_monday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_monday'] ?? ''); ?>" maxlength="20" <?php echo $row['monday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
                             </td>
-                            <!-- Repeat similar structure for other days (Tuesday to Friday) -->
+                            
+                            <!-- Tuesday -->
                             <td>
                                 <select id="select_tuesday_<?php echo $index; ?>" class="form-select" name="schedule[<?php echo $index; ?>][tuesday]" onchange="toggleCustomInput(this, 'custom_tuesday_<?php echo $index; ?>', 'select_tuesday_<?php echo $index; ?>')">
                                     <option value="" class="leeg-optie">Leeg</option>
@@ -151,10 +149,11 @@ for ($i = 0; $i < 5; $i++) {
                                     <option value="Thuis werken" <?php echo $row['tuesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['tuesday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
-                                <input type="text" class="form-control inline-input <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_tuesday]" id="custom_tuesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_tuesday'] ?? ''); ?>" <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
+                                <input type="text" class="form-control inline-input <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_tuesday]" id="custom_tuesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_tuesday'] ?? ''); ?>" maxlength="20" <?php echo $row['tuesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
                             </td>
+                            
+                            <!-- Wednesday -->
                             <td>
-                                <!-- Repeat similar structure for Wednesday -->
                                 <select id="select_wednesday_<?php echo $index; ?>" class="form-select" name="schedule[<?php echo $index; ?>][wednesday]" onchange="toggleCustomInput(this, 'custom_wednesday_<?php echo $index; ?>', 'select_wednesday_<?php echo $index; ?>')">
                                     <option value="" class="leeg-optie">Leeg</option>
                                     <option value="Halve dag" <?php echo $row['wednesday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
@@ -165,10 +164,11 @@ for ($i = 0; $i < 5; $i++) {
                                     <option value="Thuis werken" <?php echo $row['wednesday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['wednesday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
-                                <input type="text" class="form-control inline-input <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_wednesday]" id="custom_wednesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_wednesday'] ?? ''); ?>" <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
+                                <input type="text" class="form-control inline-input <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_wednesday]" id="custom_wednesday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_wednesday'] ?? ''); ?>" maxlength="20" <?php echo $row['wednesday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
                             </td>
+                            
+                            <!-- Thursday -->
                             <td>
-                                <!-- Thursday -->
                                 <select id="select_thursday_<?php echo $index; ?>" class="form-select" name="schedule[<?php echo $index; ?>][thursday]" onchange="toggleCustomInput(this, 'custom_thursday_<?php echo $index; ?>', 'select_thursday_<?php echo $index; ?>')">
                                     <option value="" class="leeg-optie">Leeg</option>
                                     <option value="Halve dag" <?php echo $row['thursday'] == 'Halve dag' ? 'selected' : ''; ?>>Halve dag</option>
@@ -179,8 +179,9 @@ for ($i = 0; $i < 5; $i++) {
                                     <option value="Thuis werken" <?php echo $row['thursday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['thursday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
-                                <input type="text" class="form-control inline-input <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_thursday]" id="custom_thursday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_thursday'] ?? ''); ?>" <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
+                                <input type="text" class="form-control inline-input <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_thursday]" id="custom_thursday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_thursday'] ?? ''); ?>" maxlength="20" <?php echo $row['thursday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
                             </td>
+                            
                             <!-- Friday -->
                             <td>
                                 <select id="select_friday_<?php echo $index; ?>" class="form-select" name="schedule[<?php echo $index; ?>][friday]" onchange="toggleCustomInput(this, 'custom_friday_<?php echo $index; ?>', 'select_friday_<?php echo $index; ?>')">
@@ -193,14 +194,20 @@ for ($i = 0; $i < 5; $i++) {
                                     <option value="Thuis werken" <?php echo $row['friday'] == 'Thuis werken' ? 'selected' : ''; ?>>Thuis werken</option>
                                     <option value="Eigen invoer" <?php echo $row['friday'] == 'Eigen invoer' ? 'selected' : ''; ?>>Eigen invoer</option>
                                 </select>
-                                <input type="text" class="form-control inline-input <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_friday]" id="custom_friday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_friday'] ?? ''); ?>" <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
+                                <input type="text" class="form-control inline-input <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'hidden-input'; ?>" name="schedule[<?php echo $index; ?>][custom_friday]" id="custom_friday_<?php echo $index; ?>" placeholder="Eigen invoer" value="<?php echo htmlspecialchars($row['custom_friday'] ?? ''); ?>" maxlength="20" <?php echo $row['friday'] == 'Eigen invoer' ? '' : 'readonly'; ?>>
                             </td>
+
+                            <!-- Starttijd -->
                             <td>
                                 <input type="time" class="form-control" name="schedule[<?php echo $index; ?>][start]" value="<?php echo htmlspecialchars($row['start']); ?>">
                             </td>
+
+                            <!-- Eindtijd -->
                             <td>
                                 <input type="time" class="form-control" name="schedule[<?php echo $index; ?>][end]" value="<?php echo htmlspecialchars($row['end']); ?>">
                             </td>
+
+                            <!-- Verwijderknop -->
                             <td>
                                 <button type="submit" name="remove" class="btn btn-danger">Verwijder</button>
                                 <input type="hidden" name="remove_index" value="<?php echo $index; ?>">
@@ -210,14 +217,18 @@ for ($i = 0; $i < 5; $i++) {
                     </tbody>
                 </table>
             </div><br>
+            
+            <!-- Knoppen om het rooster op te slaan of medewerkers toe te voegen -->
             <div class="btn-container">
-                <button type="submit" name="save" class="btn btn-success">Save</button>
-                <button type="submit" name="add" class="btn btn-primary">Add</button>
+                <button type="submit" name="save" class="btn btn-success">Opslaan</button>
+                <button type="submit" name="add" class="btn btn-primary">Medewerker Toevoegen</button>
             </div>
         </form>
     </div>
-<script src="agenda.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
+    <!-- Script voor functionaliteiten zoals custom invoervelden -->
+    <script src="agenda.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
